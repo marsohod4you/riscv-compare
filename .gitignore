@@ -1,0 +1,3 @@
+FPGA/m3-picorv32/db/*
+FPGA/m3-picorv32/incremental_db/*
+FPGA/m3-picorv32/output_files/*
