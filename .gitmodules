@@ -1,0 +1,3 @@
+[submodule "riscv-cores/picorv32"]
+	path = riscv-cores/picorv32
+	url = https://github.com/YosysHQ/picorv32.git
