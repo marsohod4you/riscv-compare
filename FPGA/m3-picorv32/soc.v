@@ -128,17 +128,43 @@ always @(posedge clk)
 	end
 `endif
 
+`define MIN_CONF 1
+
+`ifdef MIN_CONF
+localparam _ENABLE_REGS_16_31	= 0;
+localparam _COMPRESSED_ISA		= 1;
+localparam _TWO_STAGE_SHIFT	= 0;
+localparam _BARREL_SHIFTER		= 0;
+localparam _TWO_CYCLE_ALU		= 1;
+localparam _ENABLE_MUL			= 0;
+localparam _ENABLE_FAST_MUL	= 0;
+localparam _ENABLE_DIV			= 0;
+`else
+localparam _ENABLE_REGS_16_31	= 1;
+localparam _COMPRESSED_ISA		= 1;
+localparam _TWO_STAGE_SHIFT	= 0;
+localparam _BARREL_SHIFTER		= 1;
+localparam _TWO_CYCLE_ALU		= 0;
+localparam _ENABLE_MUL			= 1;
+localparam _ENABLE_FAST_MUL	= 1;
+localparam _ENABLE_DIV			= 1;
+`endif	
+
 // -------------------------------
 // PicoRV32 Core
 picorv32 #(
 	.ENABLE_COUNTERS(1),
+	.ENABLE_REGS_16_31( _ENABLE_REGS_16_31 ),
+	.COMPRESSED_ISA( _COMPRESSED_ISA ),
 	.LATCHED_MEM_RDATA(1),
-	.TWO_STAGE_SHIFT(0),
-	.TWO_CYCLE_ALU(1),
+	.TWO_STAGE_SHIFT( _TWO_STAGE_SHIFT ),
+	.BARREL_SHIFTER( _BARREL_SHIFTER ),
+	.TWO_CYCLE_ALU( _TWO_CYCLE_ALU ),
 	.CATCH_MISALIGN(0),
 	.CATCH_ILLINSN(0),
-	.ENABLE_MUL(1),
-	.ENABLE_DIV(1),
+	.ENABLE_MUL( _ENABLE_MUL ),
+	.ENABLE_FAST_MUL( _ENABLE_FAST_MUL ),
+	.ENABLE_DIV( _ENABLE_DIV ),
 	.PROGADDR_RESET(32'h00000000)
 ) cpu (
 	.clk      (clk      ),
