@@ -81,7 +81,8 @@ struct tms      time_info;
                 /* Measurements should last at least about 2 seconds */
 #endif
 #ifdef TIME
-extern long     time();
+extern long     time( long* x );
+extern long     insn( long* x );
                 /* see library function "time"  */
 #define Too_Small_Time 2
                 /* Measurements should last at least 2 seconds */
@@ -90,6 +91,11 @@ extern long     time();
 long            Begin_Time,
                 End_Time,
                 User_Time;
+
+long            Begin_Insn,
+                End_Insn,
+                User_Insn;
+
 #if 0
 float           Microseconds,
                 Dhrystones_Per_Second;
@@ -207,6 +213,7 @@ char	*argv[];
 #endif
 #ifdef TIME
   Begin_Time = time ( (long *) 0);
+  Begin_Insn = insn ( (long *) 0);
 #endif
 #endif /* SELF_TIMED */
 
@@ -270,6 +277,7 @@ char	*argv[];
 #endif
 #ifdef TIME
   End_Time = time ( (long *) 0);
+  End_Insn = insn ( (long *) 0);
 #endif
 #endif /* SELF_TIMED */
 
@@ -357,7 +365,13 @@ char	*argv[];
   sc_printf("Time: begin= %ld, end= %ld, diff= %ld\n", Begin_Time, End_Time, User_Time);
   sc_printf("Microseconds for one run through Dhrystone: %ld\n", Microseconds);
   sc_printf("Dhrystones per Second:                      %ld\n", Dhrystones_Per_Second);
-
+  
+  User_Insn = End_Insn - Begin_Insn;
+  int Cycles_Per_Instruction_x1000 = (1000 * User_Time) / User_Insn;
+  printf("Cycles_Per_Instruction: %d.%d%d%d\n", Cycles_Per_Instruction_x1000 / 1000,
+		(Cycles_Per_Instruction_x1000 / 100) % 10,
+		(Cycles_Per_Instruction_x1000 / 10) % 10,
+		(Cycles_Per_Instruction_x1000 / 1) % 10);
 #endif
   }
 #endif /* SELF_TIMED */

@@ -444,3 +444,8 @@ static long time(long *x)
 {
     return rdcycle();
 }
+
+static long insn( long *x )
+{
+	return rdinstret();
+}
