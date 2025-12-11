@@ -1,1 +1,7 @@
 The Dhrystone benchmark firmware.
+
+To build FW simply run build.sh script with parameter EC or IM like this:
+>./build.sh EC
+
+EC means Embedded variant, 16 registers, Compressed code allowed.
+IM means common RISCV with 32 registers and MUL/DIV instructions.
