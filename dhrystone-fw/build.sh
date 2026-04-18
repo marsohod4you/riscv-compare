@@ -45,11 +45,11 @@ riscv64-unknown-elf-gcc $CFLAGS dhry_2.c -o ${DONE_DIR}/dhry_2.o
 riscv64-unknown-elf-gcc -o ${DONE_DIR}/dhry.elf -T riscv.ld ${DONE_DIR}/start.o ${DONE_DIR}/sc_print.o ${DONE_DIR}/dhry_1.o ${DONE_DIR}/dhry_2.o -nostartfiles -nostdlib -lc -lgcc --specs=nano.specs $ABI
 riscv64-unknown-elf-objdump -D -D -w -x -S ${DONE_DIR}/dhry.elf > ${DONE_DIR}/dhry.dump
 riscv64-unknown-elf-objcopy -O verilog --verilog-data-width 1 ${DONE_DIR}/dhry.elf ${DONE_DIR}/dhry.hex
-python mk-mif.py > ${DONE_DIR}/dhry.mif
-python mk-tcm-mem.py > ${DONE_DIR}/dhry32.hex
+python mk-mif.py ${DONE_DIR}/dhry.hex > ${DONE_DIR}/dhry.mif
+python mk-tcm-mem.py ${DONE_DIR}/dhry.hex > ${DONE_DIR}/dhry32.hex
 
 echo "Update Memory Init files of FPGA projects"
-cp ${DONE_DIR}/dhry.mif ../FPGA/m3-picorv32/
+cp ${DONE_DIR}/dhry.mif ../FPGA/m3-picorv32/ip_sram${SUFFIX}/dhry${SUFFIX}.mif
 
 echo "Update Memory Init files for picorv32 simulations"
 cp ${DONE_DIR}/dhry.hex ../FPGA/m3-picorv32/sim/dhry${SUFFIX}.hex
