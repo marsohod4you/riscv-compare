@@ -1,10 +1,10 @@
-// megafunction wizard: %RAM: 1-PORT%
+// megafunction wizard: %RAM: 1-PORT%VBB%
 // GENERATION: STANDARD
 // VERSION: WM1.0
 // MODULE: altsyncram 
 
 // ============================================================
-// File Name: sram.v
+// File Name: sram_im.v
 // Megafunction Name(s):
 // 			altsyncram
 //
@@ -16,7 +16,6 @@
 //
 // 23.1std.0 Build 991 11/28/2023 Patches 0.02std SC Lite Edition
 // ************************************************************
-
 
 //Copyright (C) 2023  Intel Corporation. All rights reserved.
 //Your use of Intel Corporation's design tools, logic functions 
@@ -33,11 +32,7 @@
 //refer to the applicable agreement for further details, at
 //https://fpgasoftware.intel.com/eula.
 
-
-// synopsys translate_off
-`timescale 1 ps / 1 ps
-// synopsys translate_on
-module sram (
+module sram_im (
 	address,
 	byteena,
 	clock,
@@ -59,52 +54,6 @@ module sram (
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_on
 `endif
-
-	wire [31:0] sub_wire0;
-	wire [31:0] q = sub_wire0[31:0];
-
-	altsyncram	altsyncram_component (
-				.address_a (address),
-				.byteena_a (byteena),
-				.clock0 (clock),
-				.data_a (data),
-				.wren_a (wren),
-				.q_a (sub_wire0),
-				.aclr0 (1'b0),
-				.aclr1 (1'b0),
-				.address_b (1'b1),
-				.addressstall_a (1'b0),
-				.addressstall_b (1'b0),
-				.byteena_b (1'b1),
-				.clock1 (1'b1),
-				.clocken0 (1'b1),
-				.clocken1 (1'b1),
-				.clocken2 (1'b1),
-				.clocken3 (1'b1),
-				.data_b (1'b1),
-				.eccstatus (),
-				.q_b (),
-				.rden_a (1'b1),
-				.rden_b (1'b1),
-				.wren_b (1'b0));
-	defparam
-		altsyncram_component.byte_size = 8,
-		altsyncram_component.clock_enable_input_a = "BYPASS",
-		altsyncram_component.clock_enable_output_a = "BYPASS",
-		altsyncram_component.init_file = "../dhry.mif",
-		altsyncram_component.intended_device_family = "MAX 10",
-		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=NO",
-		altsyncram_component.lpm_type = "altsyncram",
-		altsyncram_component.numwords_a = 32768,
-		altsyncram_component.operation_mode = "SINGLE_PORT",
-		altsyncram_component.outdata_aclr_a = "NONE",
-		altsyncram_component.outdata_reg_a = "UNREGISTERED",
-		altsyncram_component.power_up_uninitialized = "FALSE",
-		altsyncram_component.read_during_write_mode_port_a = "NEW_DATA_NO_NBE_READ",
-		altsyncram_component.widthad_a = 15,
-		altsyncram_component.width_a = 32,
-		altsyncram_component.width_byteena_a = 4;
-
 
 endmodule
 
@@ -130,7 +79,7 @@ endmodule
 // Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "0"
 // Retrieval info: PRIVATE: JTAG_ID STRING "NONE"
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
-// Retrieval info: PRIVATE: MIFfilename STRING "../dhry.mif"
+// Retrieval info: PRIVATE: MIFfilename STRING "dhry_im.mif"
 // Retrieval info: PRIVATE: NUMWORDS_A NUMERIC "32768"
 // Retrieval info: PRIVATE: RAM_BLOCK_TYPE NUMERIC "0"
 // Retrieval info: PRIVATE: READ_DURING_WRITE_MODE_PORT_A NUMERIC "3"
@@ -148,7 +97,7 @@ endmodule
 // Retrieval info: CONSTANT: BYTE_SIZE NUMERIC "8"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
-// Retrieval info: CONSTANT: INIT_FILE STRING "../dhry.mif"
+// Retrieval info: CONSTANT: INIT_FILE STRING "dhry_im.mif"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "MAX 10"
 // Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=NO"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
@@ -173,10 +122,10 @@ endmodule
 // Retrieval info: CONNECT: @data_a 0 0 32 0 data 0 0 32 0
 // Retrieval info: CONNECT: @wren_a 0 0 0 0 wren 0 0 0 0
 // Retrieval info: CONNECT: q 0 0 32 0 @q_a 0 0 32 0
-// Retrieval info: GEN_FILE: TYPE_NORMAL sram.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL sram.inc FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL sram.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL sram.bsf FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL sram_inst.v FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL sram_bb.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sram_im.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sram_im.inc FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sram_im.cmp FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sram_im.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sram_im_inst.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sram_im_bb.v TRUE
 // Retrieval info: LIB_FILE: altera_mf

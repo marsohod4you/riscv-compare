@@ -191,8 +191,8 @@ set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "PASSIVE SERIAL"
 set_global_assignment -name INTERNAL_FLASH_UPDATE_MODE "SINGLE IMAGE WITH ERAM"
 set_global_assignment -name VERILOG_INPUT_VERSION VERILOG_2001
 set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
+set_global_assignment -name QIP_FILE ip_sram_im/sram_im.qip
 set_global_assignment -name VERILOG_FILE soc.v
-set_global_assignment -name QIP_FILE ip_sram/sram.qip
 set_global_assignment -name QIP_FILE ip_pll/pll2.qip
 set_global_assignment -name VERILOG_FILE "../../riscv-cores/picorv32/picorv32.v"
 set_global_assignment -name VERILOG_FILE ../common/sserial.v
