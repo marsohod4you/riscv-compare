@@ -1,5 +1,11 @@
-# Replace with the actual path to your file
-file_path = "done/dhry.hex"
+import sys
+
+arg_count = len(sys.argv)
+if arg_count!=2 :
+	print("Need one argument HEX file name")
+	sys.exit()
+
+file_path = sys.argv[1]
 
 #num 32 bit words
 LEN=1024*32
