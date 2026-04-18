@@ -10,7 +10,17 @@ module sram4sim(
 	);
 
 reg [7:0] memory[0:128*1024-1];
-initial $readmemh("done/dhry.hex", memory);
+
+initial
+begin
+`ifdef MIN_CPU_CONFIG
+	$display("Simulation with FW Boot File for Embedded/Compressed CPU with reduced number of REGs=16");
+	$readmemh("dhry_ec.hex", memory);
+`else
+	$display("Simulation with FW Boot File for CPU with MUL/DIV instructions number of REGs=32");
+	$readmemh("dhry_im.hex", memory);
+`endif
+end
 
 reg [17:0]address_;
 reg [3:0]byteena_;

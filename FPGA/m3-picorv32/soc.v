@@ -71,7 +71,7 @@ end
 `ifdef SIMULATION
 //initialized with *.hex file RISCV code
 sram4sim u_sram(
-	.address( mem_addr[31:2]),
+	.address( mem_addr[17:2]),
 	.byteena(mem_wstrb),
 	.clock(clk),
 	.data(mem_wdata),
@@ -81,7 +81,7 @@ sram4sim u_sram(
 `else
 //initialized with *.MIF file RISCV code
 sram u_sram(
-	.address(mem_addr[31:2]),
+	.address(mem_addr[17:2]),
 	.byteena(mem_wstrb),
 	.clock(clk),
 	.data(mem_wdata),
@@ -128,25 +128,33 @@ always @(posedge clk)
 	end
 `endif
 
-`define MIN_CONF 1
-
-`ifdef MIN_CONF
+`ifdef MIN_CPU_CONFIG
+//minimal CPU configuration
+initial
+begin
+	$display("Simulation Config for Embedded/Compressed CPU with reduced number of REGs=16");
+end
 localparam _ENABLE_REGS_16_31	= 0;
 localparam _COMPRESSED_ISA		= 1;
-localparam _TWO_STAGE_SHIFT	= 0;
+localparam _TWO_STAGE_SHIFT		= 1;
 localparam _BARREL_SHIFTER		= 0;
 localparam _TWO_CYCLE_ALU		= 1;
 localparam _ENABLE_MUL			= 0;
-localparam _ENABLE_FAST_MUL	= 0;
+localparam _ENABLE_FAST_MUL		= 0;
 localparam _ENABLE_DIV			= 0;
 `else
+//maximal CPU configuration
+initial
+begin
+	$display("Simulation Config for CPU with MUL/DIV and number of REGs=32");
+end
 localparam _ENABLE_REGS_16_31	= 1;
 localparam _COMPRESSED_ISA		= 1;
-localparam _TWO_STAGE_SHIFT	= 0;
+localparam _TWO_STAGE_SHIFT		= 0;
 localparam _BARREL_SHIFTER		= 1;
 localparam _TWO_CYCLE_ALU		= 0;
 localparam _ENABLE_MUL			= 1;
-localparam _ENABLE_FAST_MUL	= 1;
+localparam _ENABLE_FAST_MUL		= 1;
 localparam _ENABLE_DIV			= 1;
 `endif	
 
