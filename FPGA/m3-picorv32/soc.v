@@ -80,14 +80,19 @@ sram4sim u_sram(
 	);
 `else
 //initialized with *.MIF file RISCV code
-sram u_sram(
-	.address(mem_addr[17:2]),
-	.byteena(mem_wstrb),
-	.clock(clk),
-	.data(mem_wdata),
-	.wren(mem_write),
-	.q(mem_rdata_sram)
-	);
+`ifdef MIN_CPU_CONFIG
+	sram_ec
+`else
+	sram_im
+`endif	
+	u_sram(
+			.address(mem_addr[17:2]),
+			.byteena(mem_wstrb),
+			.clock(clk),
+			.data(mem_wdata),
+			.wren(mem_write),
+			.q(mem_rdata_sram)
+			);
 `endif
 
 //serial port FIFO (dual clock - CPU and Serial may work on different frequences)
@@ -185,17 +190,14 @@ picorv32 #(
 	.mem_rdata(mem_rdata)
 );
 
-/*
-reg [31:0]cnt = 0;
-reg [7:0]port=8'h00;
-always @(posedge clk)
-begin
-	cnt <= cnt+1;
-	if(serial_port_wr)
-		port <= mem_wdata[7: 0];
-end
-*/
 
-assign LED = {7'd0,serial_busy}; //port; //cnt[23:16];
+reg [31:0]cnt = 0;
+always @(posedge clk)
+	if( resetn==1'b0 )
+		cnt <= 0;
+	else
+		cnt <= cnt+1;
+
+assign LED = cnt[23:16];
 
 endmodule
