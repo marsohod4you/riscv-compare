@@ -5,3 +5,8 @@ To build FW simply run build.sh script with parameter EC or IM like this:
 
 EC means Embedded variant, 16 registers, Compressed code allowed.
 IM means common RISCV with 32 registers and MUL/DIV instructions.
+
+1) Most probably You may need to edit paths to gcc compiler and python in build.sh script.
+2) This project is developed under Windows OS, but to run sh script use Git Bash (https://git-scm.com/install/windows), otherwise simply try to run build.sh in Linux
+
+
