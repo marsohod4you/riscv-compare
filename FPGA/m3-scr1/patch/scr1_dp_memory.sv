@@ -40,8 +40,12 @@ module scr1_dp_memory
 `ifdef SCR1_TCM_INITIAL_DATA
 initial
 begin
-	//hexadecimal data
-	$readmemh("dhry32.hex", memory_array);
+	//hexadecimal data for TCM memory diffirently compiled code for EC or IM configuration
+`ifdef MIN_CPU_CONFIG
+	$readmemh("dhry32_ec.hex", memory_array);
+`else
+	$readmemh("dhry32_im.hex", memory_array);
+`endif
 end
 `endif
 
