@@ -335,8 +335,8 @@ char	*argv[];
   printf ("Str_2_Loc:           %s\n", Str_2_Loc);
   printf ("        should be:   DHRYSTONE PROGRAM, 2'ND STRING\n");
   printf ("\n");
-
   User_Time = End_Time - Begin_Time;
+  printf ("BeginTime %d EndTime %d UserTime %d\n",Begin_Time,End_Time,User_Time);
 
   if (User_Time < Too_Small_Time)
   {
