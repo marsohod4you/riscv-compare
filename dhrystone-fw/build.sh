@@ -55,4 +55,4 @@ echo "Update Memory Init files for picorv32 simulations"
 cp ${DONE_DIR}/dhry.hex ../FPGA/m3-picorv32/sim/dhry${SUFFIX}.hex
 
 echo "Update Memory Init files for scr1 simulations"
-cp ${DONE_DIR}/dhry32.hex ../FPGA/m3-scr1/sim/dhry${SUFFIX}.hex
+cp ${DONE_DIR}/dhry32.hex ../FPGA/m3-scr1/sim/dhry32${SUFFIX}.hex
