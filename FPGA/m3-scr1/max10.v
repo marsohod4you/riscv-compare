@@ -16,12 +16,21 @@ localparam SIMSTOP_PORT_ADDR = 32'h1000_1000;
 
 wire sysclk;
 wire serial_clk;
+`ifdef SIMULATION
+//avoid PLL for functional simulation, simply make serial clk 16 times higher then sysclk
+reg [3:0]clk_div = 0;
+always @(posedge CLK100MHZ)
+    clk_div <= clk_div+1;
+assign sysclk = clk_div[3];
+assign serial_clk = CLK100MHZ;
+`else
 mypll	mypll_inst(
 	.inclk0(CLK100MHZ),
 	.locked(),
 	.c0(sysclk),
 	.c1(serial_clk)
 	);
+`endif
 
 reg [3:0]rstcnt=0;
 reg rst=1'b0;
@@ -124,6 +133,7 @@ scr1_top_ahb i_top (
     .dmem_hresp         (1'b0)
 );
 
+reg bus_serial_wr_ = 1'b0;
 wire bus_serial_wr;  assign bus_serial_wr  = dmem_hwrite_         & (dmem_haddr_==SERIAL_PORT_ADDR);
 wire bus_serial_rd;  assign bus_serial_rd  = (dmem_hwrite_==1'b0) & (dmem_haddr_==SERIAL_PORT_ADDR);
 wire bus_simstop_wr; assign bus_simstop_wr = dmem_hwrite_ & (dmem_haddr_==SIMSTOP_PORT_ADDR);
