@@ -90,6 +90,7 @@ verilator -cc -Wno-fatal --no-timing \
 
 cd obj_dir
 make -f Vmax10.mk
+cd ..
 
 echo ""
 echo "***************************************************"
