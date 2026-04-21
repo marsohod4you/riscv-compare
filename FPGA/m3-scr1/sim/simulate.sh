@@ -19,7 +19,7 @@ if [ -f "$FW_BOOT_FILE" ]; then
 	echo "Firmware Boot File exists: ${FW_BOOT_FILE}"
 else
 	echo "Firmware Boot File DOES NOT exist: ${FW_BOOT_FILE}, first build FW!"
-	#exit 1
+	exit 1
 fi
 
 export PRV32_DIR=../../../riscv-cores/picorv32
