@@ -46,6 +46,15 @@ begin
 `else
 	$readmemh("dhry32_im.hex", memory_array);
 `endif
+$display("TCM memory content from start address 0:");
+$display("  %08x",memory_array[0]);
+$display("  %08x",memory_array[1]);
+$display("  %08x",memory_array[2]);
+$display("  %08x",memory_array[3]);
+$display("  %08x",memory_array[4]);
+$display("  %08x",memory_array[5]);
+$display("  %08x",memory_array[6]);
+$display("  %08x",memory_array[7]);
 end
 `endif
 
