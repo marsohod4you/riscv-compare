@@ -2,12 +2,12 @@
 
 if [ "$1" = "EC" ]; then
 	echo "Simulate for reduced CPU (Embedded/Compressed) with 16 regs"
-	FW_BOOT_FILE="dhry_ec.hex"
+	FW_BOOT_FILE="dhry32_ec.hex"
 	SIM_FLAGS=-DMIN_CPU_CONFIG=1
 else
 	if [ "$1" = "IM" ]; then
 		echo "Simulate for CPU with mul/dev and 32 regs"
-		FW_BOOT_FILE="dhry_im.hex"
+		FW_BOOT_FILE="dhry32_im.hex"
 		SIM_FLAGS=-DMAX_CPU_CONFIG=1
 	else
 		echo "Please give param EC or IM"
