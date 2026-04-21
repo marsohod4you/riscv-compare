@@ -27,16 +27,25 @@ export COMMON_DIR=../../common
 export FIFO_DIR=${COMMON_DIR}/generic_fifos/rtl/verilog/
 
 SIM_DIR=${PWD}
-echo "Patching SCR1 project.."
+echo ""
+echo "***************************************************"
+echo "*** Patching SCR1 project..                     ***"
+echo "***************************************************"
 cd ../
 tclsh patch/patch.tcl
 echo "Patching SCR1 project done.."
 cd ${SIM_DIR}
 
+echo ""
+echo "***************************************************"
+echo "*** Compile with Verilator..                    ***"
+echo "***************************************************"
+
 rm -f obj_dir
 verilator -cc -Wno-fatal --no-timing \
 	-sv +1800-2017ext+sv \
 	--exe ${PWD}/tb.cpp \
+	${SIM_FLAGS} \
 	-DSIMULATION=1 \
 	-DSCR1_TRGT_SIMULATION=1 \
 	-DSCR1_ARCH_CUSTOM=1 \
@@ -81,3 +90,10 @@ verilator -cc -Wno-fatal --no-timing \
 
 cd obj_dir
 make -f Vmax10.mk
+
+echo ""
+echo "***************************************************"
+echo "*** Start Simulator                             ***"
+echo "***************************************************"
+
+./Vmax10
