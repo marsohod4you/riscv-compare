@@ -7,6 +7,7 @@
 #include "sc_print.h"
 
 #define SC_SIM_OUTPORT (0x10000000)
+#define SC_SEG7_OUTPORT (0x10000004)
 #define CHAR_BIT (8)
 
 void wait_serial() {
@@ -292,4 +293,35 @@ sc_printf(const char* fmt, ...)
 
     va_end(ap);
     return 0; // incorrect return value, but who cares, anyway?
+}
+
+// dst must be at least 11 bytes
+void dec2str(unsigned int value, char *dst) {
+    char buf[11]; // max 10 digits + NULL
+    int i = 10;
+    buf[i] = '\0';
+    if (value == 0) {
+        buf[--i] = '0';
+    } else {
+        while (value > 0) {
+            buf[--i] = '0' + (value % 10);
+            value /= 10;
+        }
+    }
+    // Copy to output
+    int j = 0;
+    while (buf[i]) {
+        dst[j++] = buf[i++];
+    }
+    dst[j] = '\0';
+}
+
+void seg7display( int value)
+{
+	char str[16];
+	dec2str(value,str);
+	unsigned int dec;
+	dec = ((str[0]-0x30)<<12) | ((str[1]-0x30)<<8) | ((str[2]-0x30)<<4) | (str[3]-0x30);
+	volatile unsigned int *seg7_ptr = (volatile unsigned int*)SC_SEG7_OUTPORT;
+	*seg7_ptr = dec;
 }

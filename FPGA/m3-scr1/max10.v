@@ -12,6 +12,7 @@ module max10(
 );
 
 localparam SERIAL_PORT_ADDR  = 32'h1000_0000;
+localparam SEG7_PORT_ADDR    = 32'h1000_0004;
 localparam SIMSTOP_PORT_ADDR = 32'h1000_1000;
 
 wire sysclk;
@@ -134,14 +135,17 @@ scr1_top_ahb i_top (
 );
 
 reg bus_serial_wr_ = 1'b0;
+reg bus_seg7_wr_ = 1'b0;
 wire bus_serial_wr;  assign bus_serial_wr  = dmem_hwrite_         & (dmem_haddr_==SERIAL_PORT_ADDR);
 wire bus_serial_rd;  assign bus_serial_rd  = (dmem_hwrite_==1'b0) & (dmem_haddr_==SERIAL_PORT_ADDR);
+wire bus_seg7_wr;    assign bus_seg7_wr    = dmem_hwrite_         & (dmem_haddr_==SEG7_PORT_ADDR);
 wire bus_simstop_wr; assign bus_simstop_wr = dmem_hwrite_ & (dmem_haddr_==SIMSTOP_PORT_ADDR);
 
 wire serial_busy;
 always @(posedge sysclk)
 begin
 	bus_serial_wr_ <= bus_serial_wr;
+	bus_seg7_wr_ <= bus_seg7_wr;
 	//read port
 	if(bus_serial_rd)
 		dmem_hrdata_<={31'd0,serial_busy};
@@ -180,6 +184,23 @@ always @(posedge sysclk)
 `endif
 
 //////////////////////////////////////////////////
+
+reg [31:0]seg7r = 0;
+always @(posedge sysclk)
+	if(bus_seg7_wr_)
+		seg7r <= dmem_hwdata_[31:0];
+
+wire [3:0]s7_digit_sel;
+wire [7:0]s7_out;
+seg4x7 u_seg4x7(
+	.clk( CLK100MHZ ),
+	.in( seg7r[15:0] ),
+	.digit_sel( s7_digit_sel ),
+	.out( s7_out )
+);
+
+assign { IO[15],IO[13],IO[12],IO[14] } = s7_digit_sel;
+assign IO[7:0]  = s7_out;
 
 assign LED = 0;
 
