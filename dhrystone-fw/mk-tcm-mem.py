@@ -9,7 +9,7 @@ if arg_count!=2 :
 file_path = sys.argv[1]
 
 #num 32 bit words
-LEN=1024*16
+LEN=1024*8
 ARR=[]
 i=0
 while i<LEN*4 :
