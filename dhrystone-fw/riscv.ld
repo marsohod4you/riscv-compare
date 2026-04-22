@@ -8,7 +8,7 @@ OUTPUT_ARCH( "riscv" )
 ENTRY(_start)
 
 MEMORY {
-  RAM (rwx) : ORIGIN = 0x0, LENGTH = 64K
+  RAM (rwx) : ORIGIN = 0x0, LENGTH = 32K
 }
 
 STACK_SIZE = 256;
