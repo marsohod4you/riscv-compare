@@ -19,14 +19,16 @@
 #
 # Quartus Prime
 # Version 23.1std.0 Build 991 11/28/2023 Patches 0.02std SC Lite Edition
-# Date created = 19:13:36  April 19, 2026
+# Date created = 20:54:57  April 22, 2026
 #
 # -------------------------------------------------------------------------- #
 
 QUARTUS_VERSION = "23.1"
-DATE = "19:13:36  April 19, 2026"
+DATE = "20:54:57  April 22, 2026"
 
 # Revisions
 
-PROJECT_REVISION = "max10_ec"
-PROJECT_REVISION = "max10_im"
+PROJECT_REVISION = "max10_50K_im"
+PROJECT_REVISION = "max10_50K_ec"
+PROJECT_REVISION = "max10_8K_im"
+PROJECT_REVISION = "max10_8K_ec"
