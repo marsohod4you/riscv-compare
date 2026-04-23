@@ -26,7 +26,7 @@
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		max10_50_max_assignment_defaults.qdf
+#		max10_50K_ec_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -41,7 +41,7 @@ set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50SAE144C8G
 set_global_assignment -name TOP_LEVEL_ENTITY soc
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "23.1STD.0 SP0.02STD"
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "09:26:22  APRIL 18, 2026"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:49:34  APRIL 23, 2026"
 set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 SP0.02std Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
@@ -191,7 +191,8 @@ set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "PASSIVE SERIAL"
 set_global_assignment -name INTERNAL_FLASH_UPDATE_MODE "SINGLE IMAGE WITH ERAM"
 set_global_assignment -name VERILOG_INPUT_VERSION VERILOG_2001
 set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
-set_global_assignment -name QIP_FILE ip_sram_im/sram_im.qip
+set_global_assignment -name VERILOG_MACRO "MIN_CPU_CONFIG=1"
+set_global_assignment -name QIP_FILE ip_sram_ec/sram_ec.qip
 set_global_assignment -name VERILOG_FILE soc.v
 set_global_assignment -name QIP_FILE ip_pll/pll2.qip
 set_global_assignment -name VERILOG_FILE "../../riscv-cores/picorv32/picorv32.v"
