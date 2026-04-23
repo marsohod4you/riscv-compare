@@ -26,5 +26,5 @@ export PRV32_DIR=../../../riscv-cores/picorv32
 export COMMON_DIR=../../common
 export FIFO_DIR=${COMMON_DIR}/generic_fifos/rtl/verilog/
 rm -f qqq
-iverilog -o qqq -DSIMULATION=1 ${SIM_FLAGS} -I${FIFO_DIR} testbench.v ../soc.v ${COMMON_DIR}/sserial.v ${PRV32_DIR}/picorv32.v pll4sim.v sram4sim.v ${FIFO_DIR}/generic_dpram.v ${FIFO_DIR}/generic_fifo_dc_gray.v
+iverilog -o qqq -DSIMULATION=1 ${SIM_FLAGS} -I${FIFO_DIR} testbench.v ../soc.v ../seg4x7.v ${COMMON_DIR}/sserial.v ${PRV32_DIR}/picorv32.v pll4sim.v sram4sim.v ${FIFO_DIR}/generic_dpram.v ${FIFO_DIR}/generic_fifo_dc_gray.v
 vvp qqq
