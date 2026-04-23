@@ -4,14 +4,16 @@ module soc(
 	input  wire KEY0,
 	input  wire KEY1,
 	output wire [7:0]LED,
+	inout  wire	[19:0] IO,
 	input  wire SERIAL_RX,
 	output wire SERIAL_TX
 
 );
 
-// 32K 32bit words = 128Kbytes memory
-localparam MEM_SIZE = (1024*128);
+// 8K 32bit words = 32Kbytes memory
+localparam MEM_SIZE = (1024*32);
 localparam SERIAL_PORT_ADDR  = 32'h1000_0000;
+localparam SEG7_PORT_ADDR  = 32'h1000_0004;
 localparam SIMSTOP_PORT_ADDR = 32'h1000_1000;
 
 // -------------------------------
@@ -58,7 +60,7 @@ wire [31:0] mem_rdata_port;
 wire [31:0] mem_rdata;
 wire [ 3:0] mem_wstrb;
 wire mem_write; 
-assign mem_write = (mem_valid & !mem_ready & (|mem_wstrb) & (mem_addr!=SERIAL_PORT_ADDR) & (mem_addr!=SIMSTOP_PORT_ADDR) );
+assign mem_write = (mem_valid & !mem_ready & (|mem_wstrb) & (mem_addr!=SERIAL_PORT_ADDR) & (mem_addr!=SEG7_PORT_ADDR) & (mem_addr!=SIMSTOP_PORT_ADDR) );
 
 always @(posedge clk)
 begin
@@ -97,6 +99,7 @@ sram4sim u_sram(
 
 //serial port FIFO (dual clock - CPU and Serial may work on different frequences)
 wire serial_port_wr; assign serial_port_wr = (mem_addr==SERIAL_PORT_ADDR) & mem_valid & !mem_ready & mem_wstrb[0];
+wire seg7_port_wr; assign seg7_port_wr = (mem_addr==SEG7_PORT_ADDR) & mem_valid & !mem_ready & mem_wstrb[0];
 wire simulation_stop_port_wr; assign simulation_stop_port_wr = (mem_addr==SIMSTOP_PORT_ADDR) & mem_valid & !mem_ready & (|mem_wstrb);
 
 wire serial_busy;
@@ -132,6 +135,27 @@ always @(posedge clk)
 		$finish();
 	end
 `endif
+
+//-----------------------------
+reg [31:0]seg7r = 0;
+always @(posedge clk)
+	if(resetn==0)
+		seg7r <= 0;
+	else
+	if(seg7_port_wr)
+		seg7r <= mem_wdata;
+
+wire [3:0]s7_digit_sel;
+wire [7:0]s7_out;
+seg4x7 u_seg4x7(
+	.clk( CLK100MHZ ),
+	.in( seg7r[15:0] ),
+	.digit_sel( s7_digit_sel ),
+	.out( s7_out )
+);
+
+assign { IO[15],IO[13],IO[12],IO[14] } = s7_digit_sel;
+assign IO[7:0]  = s7_out;
 
 `ifdef MIN_CPU_CONFIG
 //minimal CPU configuration
@@ -190,14 +214,6 @@ picorv32 #(
 	.mem_rdata(mem_rdata)
 );
 
-
-reg [31:0]cnt = 0;
-always @(posedge clk)
-	if( resetn==1'b0 )
-		cnt <= 0;
-	else
-		cnt <= cnt+1;
-
-assign LED = cnt[23:16];
+assign LED = 0;
 
 endmodule
