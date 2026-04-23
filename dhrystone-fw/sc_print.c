@@ -316,12 +316,13 @@ void dec2str(unsigned int value, char *dst) {
     dst[j] = '\0';
 }
 
-void seg7display( int value)
+unsigned int seg7display( int value)
 {
 	char str[16];
 	dec2str(value,str);
 	unsigned int dec;
-	dec = ((str[0]-0x30)<<12) | ((str[1]-0x30)<<8) | ((str[2]-0x30)<<4) | (str[3]-0x30);
+	dec = ((str[0]&0xF)<<12) | ((str[1]&0xF)<<8) | ((str[2]&0xF)<<4) | (str[3]&0xF);
 	volatile unsigned int *seg7_ptr = (volatile unsigned int*)SC_SEG7_OUTPORT;
 	*seg7_ptr = dec;
+	return dec;
 }
