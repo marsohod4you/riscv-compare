@@ -117,7 +117,7 @@ extern Boolean Func_2(Str_30, Str_30);
 extern void Proc_6(Enumeration, Enumeration *);
 extern void Proc_7(One_Fifty, One_Fifty, One_Fifty *);
 extern void Proc_8(Arr_1_Dim, Arr_2_Dim, int, int);
-void seg7display( int value);
+extern unsigned int seg7display( int value);
 
 int main (argc, argv)
 int	argc;
@@ -375,7 +375,9 @@ char	*argv[];
 		(Cycles_Per_Instruction_x1000 / 1) % 10);
 	
 	//display on seg7
-	seg7display(Dhrystones_Per_Second);
+	unsigned int dec = seg7display(Dhrystones_Per_Second);
+	printf("Seg4x7 register Written %08X\n",dec);
+
 #endif
   }
 #endif /* SELF_TIMED */
