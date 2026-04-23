@@ -165,11 +165,11 @@ begin
 end
 localparam _ENABLE_REGS_16_31	= 0;
 localparam _COMPRESSED_ISA		= 1;
-localparam _TWO_STAGE_SHIFT		= 1;
+localparam _TWO_STAGE_SHIFT	= 0;
 localparam _BARREL_SHIFTER		= 0;
 localparam _TWO_CYCLE_ALU		= 1;
 localparam _ENABLE_MUL			= 0;
-localparam _ENABLE_FAST_MUL		= 0;
+localparam _ENABLE_FAST_MUL	= 0;
 localparam _ENABLE_DIV			= 0;
 `else
 //maximal CPU configuration
@@ -179,11 +179,11 @@ begin
 end
 localparam _ENABLE_REGS_16_31	= 1;
 localparam _COMPRESSED_ISA		= 1;
-localparam _TWO_STAGE_SHIFT		= 0;
+localparam _TWO_STAGE_SHIFT	= 1;
 localparam _BARREL_SHIFTER		= 1;
 localparam _TWO_CYCLE_ALU		= 0;
 localparam _ENABLE_MUL			= 1;
-localparam _ENABLE_FAST_MUL		= 1;
+localparam _ENABLE_FAST_MUL	= 1;
 localparam _ENABLE_DIV			= 1;
 `endif	
 
